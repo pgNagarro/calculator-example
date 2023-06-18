@@ -1,0 +1,124 @@
+<!DOCTYPE hmtl>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Risk Data</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+	<h1 class="text-center">DATA TABLES</h1>
+	<div class="container">
+		<div class="row">
+			<h4>Company Risk Score</h4>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class= "table-dark">
+				<tr>
+					<th>Company Name</th>
+					<th>Information Security</th>
+					<th>Resilience</th>
+					<th>Conduct</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "riskScore: ${riskScores}">
+					<td th:text = "${riskScore.companyName}"></td>
+					<td th:text = "${riskScore.informationSecurity}"></td>
+					<td th:text = "${riskScore.resilience}"></td>
+					<td th:text = "${riskScore.conduct}"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<h4>Risk Dimension</h4>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class= "table-dark">
+				<tr>
+					<th>Dimension</th>
+					<th>Weight(%)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "riskDimension: ${riskDimensions}">
+					<td th:text = "${riskDimension.dimension}"></td>
+					<td th:text = "${riskDimension.weight}"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<h4>Risk Calculation Logic</h4>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class= "table-dark">
+				<tr>
+					<th>Element Name</th>
+					<th>Formula</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "riskCalc: ${riskCalcLogic}">
+					<td th:text = "${riskCalc.elementName}"></td>
+					<td th:text = "${riskCalc.formula}"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<h4>Risk Score Level</h4>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class= "table-dark">
+				<tr>
+					<th>Score</th>
+					<th>Level</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "riskScoreL: ${riskScoreLevel}">
+					<td th:text = "${riskScoreL.score}"></td>
+					<td th:text = "${riskScoreL.level}"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<h4>Score Cap</h4>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class= "table-dark">
+				<tr>
+					<th>Condition</th>
+					<th>Total Risk Capped Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "scoreCap: ${scoreCaps}">
+					<td th:text = "${scoreCap.condition}"></td>
+					<td th:text = "${scoreCap.totalRiskCappedScore}"></td>
+				</tr>
+			</tbody>
+			
+		</table>
+	</div>
+
+</body>
+
+</html>
