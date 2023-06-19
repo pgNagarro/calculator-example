@@ -21,4 +21,25 @@ public class ScoreCapServiceImpl implements ScoreCapService{
 		return scoreCapRepository.findAll();
 	}
 
+	@Override
+	public ScoreCap saveScoreCap(ScoreCap scoreCap) {
+		return scoreCapRepository.save(scoreCap);
+	}
+
+	@Override
+	public ScoreCap getScoreCapById(ScoreCap scoreCap) {
+		List<ScoreCap> scoreCaps = scoreCapRepository.findByCondition(scoreCap.getCondition());
+		return scoreCaps.get(0);
+	}
+
+	@Override
+	public ScoreCap updateScoreCap(ScoreCap scoreCap) {
+		return scoreCapRepository.save(scoreCap);
+	}
+
+	@Override
+	public void deleteScoreCap(ScoreCap scoreCap) {
+		scoreCapRepository.deleteById(scoreCap.getCondition());	
+	}
+
 }

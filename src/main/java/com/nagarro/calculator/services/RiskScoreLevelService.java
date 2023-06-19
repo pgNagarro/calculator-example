@@ -8,4 +8,12 @@ public interface RiskScoreLevelService {
 
 	List<RiskScoreLevel> getAllRiskScoreLevel();
 	
+	RiskScoreLevel saveRiskScoreLevel(RiskScoreLevel riskScoreLevel);
+	
+	RiskScoreLevel getRiskScoreLevelById(RiskScoreLevel riskScoreLevel);
+	
+	RiskScoreLevel updateRiskScoreLevel(RiskScoreLevel riskScoreLevel);
+	
+	void deleteRiskScoreLevel(RiskScoreLevel riskScoreLevel);
+	
 }

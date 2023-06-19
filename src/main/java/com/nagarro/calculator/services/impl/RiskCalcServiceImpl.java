@@ -19,4 +19,25 @@ public class RiskCalcServiceImpl implements RiskCalcService{
 	public List<RiskCalc> getAllRiskCalcLogic() {
 		return riskCalcRepository.findAll();
 	}
+
+	@Override
+	public RiskCalc saveRiskCalc(RiskCalc riskCalc) {
+		return riskCalcRepository.save(riskCalc);
+	}
+
+	@Override
+	public RiskCalc getRiskCalcLogicById(RiskCalc riskCalc) {
+		List<RiskCalc> riskCalcs = riskCalcRepository.findByElementName(riskCalc.getElementName());
+		return riskCalcs.get(0);
+	}
+
+	@Override
+	public RiskCalc updateRiskCalcLogic(RiskCalc riskCalc) {
+		return riskCalcRepository.save(riskCalc);
+	}
+
+	@Override
+	public void deleteRiskCalcLogic(RiskCalc riskCalc) {
+		riskCalcRepository.deleteById(riskCalc.getElementName());
+	}
 }

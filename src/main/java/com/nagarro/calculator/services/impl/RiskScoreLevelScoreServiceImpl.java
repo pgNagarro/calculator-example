@@ -20,4 +20,25 @@ public class RiskScoreLevelScoreServiceImpl implements RiskScoreLevelService{
 		return riskScoreLevelRepository.findAll();
 	}
 
+	@Override
+	public RiskScoreLevel saveRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
+		return riskScoreLevelRepository.save(riskScoreLevel);
+	}
+
+	@Override
+	public RiskScoreLevel getRiskScoreLevelById(RiskScoreLevel riskScoreLevel) {
+		List<RiskScoreLevel> riskScoreLevels = riskScoreLevelRepository.findByScore(riskScoreLevel.getScore());
+		return riskScoreLevels.get(0);
+	}
+
+	@Override
+	public RiskScoreLevel updateRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
+		return riskScoreLevelRepository.save(riskScoreLevel);
+	}
+
+	@Override
+	public void deleteRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
+		riskScoreLevelRepository.deleteById(riskScoreLevel.getScore());		
+	}
+
 }

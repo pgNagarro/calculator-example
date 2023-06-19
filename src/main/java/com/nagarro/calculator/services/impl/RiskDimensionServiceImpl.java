@@ -20,4 +20,25 @@ public class RiskDimensionServiceImpl implements RiskDimensionService{
 		return riskDimensionRepository.findAll();
 	}
 
+	@Override
+	public RiskDimension saveRiskDimension(RiskDimension riskDimension) {
+		return riskDimensionRepository.save(riskDimension);
+	}
+
+	@Override
+	public RiskDimension getRiskDimensionById(RiskDimension riskDimension) {
+		List<RiskDimension> riskDimensions = riskDimensionRepository.findByDimension(riskDimension.getDimension());
+		return riskDimensions.get(0);
+	}
+
+	@Override
+	public RiskDimension updateRiskDimension(RiskDimension riskDimension) {
+		return riskDimensionRepository.save(riskDimension);
+	}
+
+	@Override
+	public void deleteRiskDimension(RiskDimension riskDimension) {
+		riskDimensionRepository.deleteById(riskDimension.getDimension());
+	}
+
 }
