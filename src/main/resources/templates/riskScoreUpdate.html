@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Risk Calculator</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Enter Details to Update:-</h1>
+        <form th:action="@{/updateRiskScore}" th:object="${companyRiskScore}" method="POST">
+            <div class="mb-3">
+                <label for="companyName" class="form-label">Enter existing company Name</label>
+                <input type="text" class="form-control" id="companyName" th:field="*{companyName}" placeholder="Enter Company Name Existing in Database">
+            </div>
+            <div class="mb-3">
+                <label for="informationSecurity" class="form-label">Information Security</label>
+                <input type="number" class="form-control" id="informationSecurity" th:field="*{informationSecurity}" placeholder="Enter Information Security">
+            </div>
+            <div class="mb-3">
+                <label for="resilience" class="form-label">Resilience</label>
+                <input type="number" class="form-control" id="resilience" th:field="*{resilience}" placeholder="Enter Resilience">
+            </div>
+            <div class="mb-3">
+                <label for="conduct" class="form-label">Conduct</label>
+                <input type="number" class="form-control" id="conduct" th:field="*{conduct}" placeholder="Enter Conduct">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

@@ -21,5 +21,25 @@ public class CompanyRiskScoreServiceImpl implements CompanyRiskScoreService{
 		return companyRiskScoreRepository.findAll();
 	}
 
+	@Override
+	public CompanyRiskScore saveRiskScore(CompanyRiskScore companyRiskScore) {
+		return companyRiskScoreRepository.save(companyRiskScore);
+	}
+
+	@Override
+	public CompanyRiskScore getRiskScoreByName(CompanyRiskScore companyRiskScore) {
+		List<CompanyRiskScore> companyRiskScores = companyRiskScoreRepository.findByCompanyName(companyRiskScore.getCompanyName());
+		return companyRiskScores.get(0);
+	}
+
+	@Override
+	public CompanyRiskScore updateCompanyRiskScore(CompanyRiskScore companyRiskScore) {
+		return companyRiskScoreRepository.save(companyRiskScore);
+	}
+
+	@Override
+	public void deleteCompanyRiskScore(CompanyRiskScore companyRiskScore) {
+		companyRiskScoreRepository.deleteById(companyRiskScore.getId());
+	}
 
 }

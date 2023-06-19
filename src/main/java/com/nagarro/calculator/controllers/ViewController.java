@@ -38,5 +38,15 @@ public class ViewController {
 		model.addAttribute("scoreCaps", scoreCapService.getAllScoreCap());
 		return "view";
 	}
+	
+	@GetMapping("/home")
+	public String outputPage(Model model) {
+		return "index";
+	}
+	
+	@GetMapping("/edit-or-add")
+	public String editOrAdd(Model model) {
+		return "editOrAdd";
+	}
 
 }

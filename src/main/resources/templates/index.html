@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/design.css}">
+    <title>Risk Calculator</title>
+</head>
+
+<body>
+    <h1>RISK CALCULATOR</h1>
+    <h4>Result based on latest Data</h4>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <th>Company</th>
+                <th>info_sec_weight</th>
+                <th>resilience_weight</th>
+                <th>conduct_weight</th>
+                <th>total_risk_score</th>
+                <th>total_risk_capped_score</th>
+                <th>composite_risk_score</th>
+            </thead>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <a th:href="@{/risk-score}"><button type="button" class="btn btn-primary">View Data</button></a>
+        <a th:href="@{/edit-or-add}"><button type="button" class="btn btn-primary">Edit or Add Details</button>
+    </div>
+</body>
+
+</html>
