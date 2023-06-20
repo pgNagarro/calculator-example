@@ -41,4 +41,10 @@ public class RiskScoreLevelScoreServiceImpl implements RiskScoreLevelService{
 		riskScoreLevelRepository.deleteById(riskScoreLevel.getScore());		
 	}
 
+	@Override
+	public boolean checkDataIfPresent(RiskScoreLevel riskScoreLevel) {
+		List<RiskScoreLevel> riskScoreLevels = riskScoreLevelRepository.findByScore(riskScoreLevel.getScore());
+		return riskScoreLevels.isEmpty();
+	}
+
 }

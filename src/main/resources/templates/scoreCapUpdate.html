@@ -16,10 +16,12 @@
         <div class="mb-3">
             <label for="condition" class="form-label">Condition</label>
             <input type="text" class="form-control" id="condition" th:field="*{condition}" placeholder="Enter Condition">
+            <div th:if="${#fields.hasErrors('condition')}" th:errors"*{condition}" th:class="error">*Invalid Input ( Field is Empty or Value is not present)</div>
         </div>
         <div class="mb-3">
             <label for="totalRiskCappedScore" class="form-label">Total Risk Capped Score</label>
             <input type="text" class="form-control" id="totalRiskCappedScore" th:field="*{totalRiskCappedScore}" placeholder="Enter Total Risk Capped Score">
+            <div th:if="${#fields.hasErrors('totalRiskCappedScore')}" th:errors"*{totalRiskCappedScore}" th:class="error">*Invalid Input ( Field is Empty)</div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

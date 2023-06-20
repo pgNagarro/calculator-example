@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,19 +10,24 @@
 </head>
 
 <body>
+
+	<div class="container">
     <h1>Enter Details to add :-</h1>
 
     <form th:action="@{/addRiskCalcLogic}" th:object="${riskCalc}" method="POST">
         <div class="mb-3">
             <label for="elementName" class="form-label">Element Name</label>
             <input type="text" class="form-control" id="elementName" th:field="*{elementName}" placeholder="Enter Element Name">
+            <div th:if="${#fields.hasErrors('elementName')}" th:errors"*{elementName}" th:class="error">*Invalid Input ( Field is empty or Value is already present )</div>
         </div>
         <div class="mb-3">
             <label for="formula" class="form-label">Formula</label>
             <input type="text" class="form-control" id="formula" th:field="*{formula}" placeholder="Enter Formula">
+            <div th:if="${#fields.hasErrors('formula')}" th:errors"*{formula}" th:class="error">*Invalid Input ( Field is empty )</div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    </div>
 
 </body>
 

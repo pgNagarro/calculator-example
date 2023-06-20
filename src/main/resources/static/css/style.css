@@ -1,0 +1,10 @@
+.item{
+	padding:20px;
+	background: rgb(50,20,100);
+	color:white;
+}
+
+.error{
+	font-size: large;
+	color: red;
+}

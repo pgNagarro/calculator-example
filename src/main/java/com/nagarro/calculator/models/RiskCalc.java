@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class RiskCalc {
 	
 	@Id
 	@Column(name="element_name")
+	@NotBlank(message="Element name cannot be blank")
 	private String elementName;
 	
 	@Column(name="formula")

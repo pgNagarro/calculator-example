@@ -17,4 +17,6 @@ public interface ScoreCapService {
 	
 	void deleteScoreCap(ScoreCap scoreCap);
 	
+	boolean checkDataIfPresent(ScoreCap scoreCap);
+	
 }

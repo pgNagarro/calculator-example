@@ -16,4 +16,6 @@ public interface RiskDimensionService {
 	
 	void deleteRiskDimension(RiskDimension riskDimension);
 	
+	boolean checkDataIfPresent(RiskDimension riskDimension);
+	
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
 
 import lombok.*;
 
@@ -20,6 +22,7 @@ public class CompanyRiskScore {
 	private Long id;
 	
 	@Column(name="company_name")
+	@NotBlank(message="Company name cannot be blank")
 	private String companyName;
 	
 	@Column(name="information_security")

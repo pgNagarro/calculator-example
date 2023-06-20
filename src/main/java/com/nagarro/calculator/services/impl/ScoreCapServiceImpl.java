@@ -42,4 +42,10 @@ public class ScoreCapServiceImpl implements ScoreCapService{
 		scoreCapRepository.deleteById(scoreCap.getCondition());	
 	}
 
+	@Override
+	public boolean checkDataIfPresent(ScoreCap scoreCap) {
+		List<ScoreCap> scoreCaps = scoreCapRepository.findByCondition(scoreCap.getCondition());
+		return scoreCaps.isEmpty();
+	}
+
 }

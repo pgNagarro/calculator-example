@@ -16,10 +16,12 @@
         <div class="mb-3">
             <label for="score" class="form-label">Score</label>
             <input type="text" class="form-control" id="score" th:field="*{score}" placeholder="Enter Score">
+            <div th:if="${#fields.hasErrors('score')}" th:errors"*{score}" th:class="error">*Invalid Input ( Field is empty or Value is not present )</div>
         </div>
         <div class="mb-3">
             <label for="level" class="form-label">Level</label>
             <input type="text" class="form-control" id="level" th:field="*{level}" placeholder="Enter Level">
+            <div th:if="${#fields.hasErrors('level')}" th:errors"*{level}" th:class="error">*Invalid Input ( Field is Empty or Value is not present)</div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

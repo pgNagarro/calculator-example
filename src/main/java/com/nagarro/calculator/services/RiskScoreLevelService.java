@@ -16,4 +16,6 @@ public interface RiskScoreLevelService {
 	
 	void deleteRiskScoreLevel(RiskScoreLevel riskScoreLevel);
 	
+	boolean checkDataIfPresent(RiskScoreLevel riskScoreLevel);
+	
 }

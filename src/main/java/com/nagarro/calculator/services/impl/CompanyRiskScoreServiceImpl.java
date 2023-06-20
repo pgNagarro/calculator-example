@@ -42,4 +42,10 @@ public class CompanyRiskScoreServiceImpl implements CompanyRiskScoreService{
 		companyRiskScoreRepository.deleteById(companyRiskScore.getId());
 	}
 
+	@Override
+	public boolean checkDataIfPresent(CompanyRiskScore companyRiskScore) {
+		List<CompanyRiskScore> companyRiskScores = companyRiskScoreRepository.findByCompanyName(companyRiskScore.getCompanyName());
+		return companyRiskScores.isEmpty();
+	}
+
 }

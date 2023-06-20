@@ -15,4 +15,6 @@ public interface CompanyRiskScoreService {
 	CompanyRiskScore updateCompanyRiskScore(CompanyRiskScore companyRiskScore);
 	
 	void deleteCompanyRiskScore(CompanyRiskScore companyRiskScore);
+	
+	boolean checkDataIfPresent(CompanyRiskScore companyRiskScore);
 }

@@ -40,4 +40,10 @@ public class RiskCalcServiceImpl implements RiskCalcService{
 	public void deleteRiskCalcLogic(RiskCalc riskCalc) {
 		riskCalcRepository.deleteById(riskCalc.getElementName());
 	}
+
+	@Override
+	public boolean checkDataIfPresent(RiskCalc riskCalc) {
+		List<RiskCalc> riskCalcs = riskCalcRepository.findByElementName(riskCalc.getElementName());
+		return riskCalcs.isEmpty();
+	}
 }

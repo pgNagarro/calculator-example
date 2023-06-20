@@ -17,10 +17,12 @@
             <div class="mb-3">
                 <label for="companyName" class="form-label">Enter existing company Name</label>
                 <input type="text" class="form-control" id="companyName" th:field="*{companyName}" placeholder="Enter Company Name Existing in Database">
+                <div th:if="${#fields.hasErrors('companyName')}" th:errors"*{companyName}" th:class="error">Invalid Input ( Field is empty or Value is not present )</div>
             </div>
             <div class="mb-3">
                 <label for="id" class="form-label">Enter Id</label>
                 <input type="number" class="form-control" id="id" th:field="*{id}" placeholder="Enter Id">
+                <div th:if="${#fields.hasErrors('id')}" th:errors"*{id}" th:class="error">Invalid Input ( Field is empty or Value is not present )</div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

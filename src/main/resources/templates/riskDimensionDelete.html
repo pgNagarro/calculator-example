@@ -17,10 +17,12 @@
         <div class="mb-3">
             <label for="dimension" class="form-label">Dimension</label>
             <input type="text" class="form-control" id="dimension" th:field="*{dimension}" placeholder="Enter Dimension">
+            <div th:if="${#fields.hasErrors('dimension')}" th:errors"*{dimension}" th:class="error">*Invalid Input ( Field is empty or Value is not present )</div>
         </div>
         <div class="mb-3">
             <label for="weight" class="form-label">Weight</label>
             <input type="number" class="form-control" id="weight" th:field="*{weight}" placeholder="Enter weight">
+            <div th:if="${#fields.hasErrors('weight')}" th:errors"*{weight}" th:class="error">*Invalid Input ( Field is empty or Value is not present )</div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

@@ -41,4 +41,10 @@ public class RiskDimensionServiceImpl implements RiskDimensionService{
 		riskDimensionRepository.deleteById(riskDimension.getDimension());
 	}
 
+	@Override
+	public boolean checkDataIfPresent(RiskDimension riskDimension) {
+		List<RiskDimension> riskDimensions = riskDimensionRepository.findByDimension(riskDimension.getDimension());
+		return riskDimensions.isEmpty();
+	}
+
 }
