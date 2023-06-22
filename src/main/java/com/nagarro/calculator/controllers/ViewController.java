@@ -38,5 +38,4 @@ public class ViewController {
 		model.addAttribute("scoreCaps", scoreCapService.getAllScoreCap());
 		return "view";
 	}
-	
 }

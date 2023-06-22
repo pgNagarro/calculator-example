@@ -41,7 +41,7 @@ public class RiskCalcController {
 		if(!riskCalcService.checkDataIfPresent(riskCalc)) {
 			bindingResult.addError(new FieldError("riskCalc", "elementName", "Element name already present"));
 		}
-		
+	
 		if(bindingResult.hasErrors()) {
 			logger.info("Validations errors while Adding.");
 			return "riskCalcLogicAdd";
