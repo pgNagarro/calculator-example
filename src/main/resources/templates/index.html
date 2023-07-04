@@ -15,15 +15,20 @@
     <h4>Result based on latest Data</h4>
     <div class="container">
         <table class="table table-bordered">
-            <thead>
-                <th>Company</th>
-                <th>info_sec_weight</th>
-                <th>resilience_weight</th>
-                <th>conduct_weight</th>
-                <th>total_risk_score</th>
-                <th>total_risk_capped_score</th>
-                <th>composite_risk_score</th>
+        	<thead class="table-dark">
+            	<td>Company Name</td>
+            	<td>Total Risk Capped Score</td>
+            	<!--<tr th:each="outputValues:${result[0].values}">
+            		<td th:text=${outputValues.elementName}>
+            	</tr>-->
             </thead>
+            <tbody>
+            	<tr th:each="result:${result}">
+            		<td th:text="${result.companyName}"></td>
+            		<td th:text="${result.totalRiskCappedScore}"></td>
+            		<td th:text="${result.values}"></td>
+            	</tr>
+            </tbody>
         </table>
     </div>
 
@@ -32,5 +37,15 @@
         <a th:href="@{/edit-or-add}"><button type="button" class="btn btn-primary">Edit or Add Details</button>
     </div>
 </body>
+	<script>
+        var user_name = document.getElementById("name");
+        document.getElementById("btn-alert").addEventListener("click", function(){
+            var value=user_name.value.trim();
+            if(!value)
+                alert("Name Cannot be empty!");
+            else
+                alert("Hello, " + value + "!\nGreetings From GeeksforGeeks.");
+        });
+    </script>
 
 </html>

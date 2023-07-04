@@ -5,16 +5,20 @@ import java.util.List;
 import com.nagarro.calculator.models.CompanyRiskScore;
 
 public interface CompanyRiskScoreService {
+	
+	List<CompanyRiskScore> getAllCompanyRiskScore();
+	
+	void addCompanyRiskScore(CompanyRiskScore companyRiskScore);	
 
-	List<CompanyRiskScore> getAllRiskScore();
-	
+//	List<CompanyRiskScore> getAllRiskScore();
+//	
 	CompanyRiskScore saveRiskScore(CompanyRiskScore companyRiskScore);
-	
-	CompanyRiskScore getRiskScoreByName(CompanyRiskScore companyRiskScore);
-	
-	CompanyRiskScore updateCompanyRiskScore(CompanyRiskScore companyRiskScore);
-	
-	void deleteCompanyRiskScore(CompanyRiskScore companyRiskScore);
-	
+//	
+//	CompanyRiskScore getRiskScoreByName(CompanyRiskScore companyRiskScore);
+//	
+//	CompanyRiskScore updateCompanyRiskScore(CompanyRiskScore companyRiskScore);
+//	
+//	void deleteCompanyRiskScore(CompanyRiskScore companyRiskScore);
+//	
 	boolean checkDataIfPresent(CompanyRiskScore companyRiskScore);
 }

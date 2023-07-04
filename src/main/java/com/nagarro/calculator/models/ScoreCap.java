@@ -23,5 +23,5 @@ public class ScoreCap {
 	private String condition;
 	
 	@Column(name="total_risk_capped_score")
-	private String totalRiskCappedScore;
+	private int totalRiskCappedScore;
 }
