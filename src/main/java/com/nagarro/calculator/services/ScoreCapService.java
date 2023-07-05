@@ -5,6 +5,11 @@ import java.util.List;
 
 import com.nagarro.calculator.models.ScoreCap;
 
+/**
+ * Interface for Score Cap Service
+ * @author parasgautam
+ *
+ */
 public interface ScoreCapService {
 	
 	List<ScoreCap> getAllScoreCap();
@@ -15,16 +20,10 @@ public interface ScoreCapService {
 	
 	ScoreCap saveScoreCap(ScoreCap scoreCap);
 	
-//	List<ScoreCap> getAllScoreCap();
-//
-	
-//	
 	ScoreCap getScoreCapById(ScoreCap scoreCap);
 	
 	ScoreCap getScoreCapByCondition(String condition);
-//	
-//	ScoreCap updateScoreCap(ScoreCap scoreCap);
-//	
+
 	void deleteScoreCap(ScoreCap scoreCap);
 //	
 //	boolean checkDataIfPresent(ScoreCap scoreCap);

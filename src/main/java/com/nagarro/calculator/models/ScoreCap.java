@@ -9,7 +9,11 @@ import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Entity class for Score Cap
+ * @author parasgautam
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

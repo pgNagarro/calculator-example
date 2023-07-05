@@ -11,6 +11,11 @@ import com.nagarro.calculator.models.RiskCalc;
 import com.nagarro.calculator.repositories.RiskCalcRepository;
 import com.nagarro.calculator.services.RiskCalcService;
 
+/**
+ * Service Implementation Class for Risk Calculation Service
+ * @author parasgautam
+ *
+ */
 @Service
 public class RiskCalcServiceImpl implements RiskCalcService{
 	

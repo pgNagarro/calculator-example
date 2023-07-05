@@ -11,6 +11,11 @@ import com.nagarro.calculator.models.CompanyRiskScore;
 import com.nagarro.calculator.repositories.CompanyRiskScoreRepository;
 import com.nagarro.calculator.services.CompanyRiskScoreService;
 
+/**
+ * Service Implementation Class for Company Risk Score Service
+ * @author parasgautam
+ *
+ */
 @Service
 public class CompanyRiskScoreServiceImpl implements CompanyRiskScoreService{
 

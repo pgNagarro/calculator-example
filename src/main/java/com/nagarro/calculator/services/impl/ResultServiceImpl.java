@@ -10,7 +10,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
@@ -33,7 +32,11 @@ import com.nagarro.calculator.services.RiskDimensionService;
 import com.nagarro.calculator.services.RiskScoreLevelService;
 import com.nagarro.calculator.services.ScoreCapService;
 
-
+/**
+ * Service Implementation Class for Result Service
+ * @author parasgautam
+ *
+ */
 @Service
 public class ResultServiceImpl implements ResultService {
 	

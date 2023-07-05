@@ -10,6 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class for Risk calculation logic
+ * @author parasgautam
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

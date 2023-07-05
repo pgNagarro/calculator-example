@@ -11,6 +11,11 @@ import com.nagarro.calculator.models.RiskDimension;
 import com.nagarro.calculator.repositories.RiskDimensionRepository;
 import com.nagarro.calculator.services.RiskDimensionService;
 
+/**
+ * Service Implementation Class for Risk Dimension Service
+ * @author parasgautam
+ *
+ */
 @Service
 public class RiskDimensionServiceImpl implements RiskDimensionService{
 	

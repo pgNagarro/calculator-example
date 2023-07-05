@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.nagarro.calculator.models.RiskCalc;
 
-
+/**
+ * Interface for Risk Calculation Logic Service
+ * @author parasgautam
+ *
+ */
 public interface RiskCalcService {
 	
 	
@@ -14,15 +18,11 @@ public interface RiskCalcService {
 
 	void addRiskCalc(RiskCalc riskCalc);
 	RiskCalc getRiskCalcLogicByName(String name);
-
-//	List<RiskCalc> getAllRiskCalcLogic();
-//	
+	
 	RiskCalc saveRiskCalc(RiskCalc riskCalc);
-//	
+	
 	RiskCalc getRiskCalcLogicById(RiskCalc riskCalc);
-//	
-//	RiskCalc updateRiskCalcLogic(RiskCalc riskCalc);
-//	
+
 	void deleteRiskCalc(RiskCalc riskCalc);
 //	
 //	boolean checkDataIfPresent(RiskCalc riskCalc);

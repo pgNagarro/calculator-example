@@ -11,6 +11,11 @@ import com.nagarro.calculator.models.ScoreCap;
 import com.nagarro.calculator.repositories.ScoreCapRepository;
 import com.nagarro.calculator.services.ScoreCapService;
 
+/**
+ * Service Implementation Class for Score Cap Service
+ * @author parasgautam
+ *
+ */
 @Service
 public class ScoreCapServiceImpl implements ScoreCapService{
 

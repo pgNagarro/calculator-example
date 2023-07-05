@@ -11,6 +11,11 @@ import com.nagarro.calculator.models.RiskScoreLevel;
 import com.nagarro.calculator.repositories.RiskScoreLevelRepository;
 import com.nagarro.calculator.services.RiskScoreLevelService;
 
+/**
+ * Service Implementation Class for Risk Score Level Service
+ * @author parasgautam
+ *
+ */
 @Service
 public class RiskScoreLevelServiceImpl implements RiskScoreLevelService{
 

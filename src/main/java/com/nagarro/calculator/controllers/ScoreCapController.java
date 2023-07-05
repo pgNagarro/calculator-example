@@ -5,20 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,20 +19,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nagarro.calculator.models.RiskScoreLevel;
 import com.nagarro.calculator.models.ScoreCap;
 
 import com.nagarro.calculator.services.ScoreCapService;
 
+/**
+ * Controller class for score cap
+ * 
+ * @author parasgautam
+ *
+ */
 @RestController
 @CrossOrigin(origins="*")
 public class ScoreCapController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ScoreCapController.class);
-	
-	private static final String REDIRECT_PAGE = "redirect:/risk-score";
-	
-	private static final String ATTRIBUTE_NAME = "scoreCap";
 	
 	@Autowired
 	private ScoreCapService scoreCapService;
@@ -58,25 +52,43 @@ public class ScoreCapController {
 		return list;
 	}
 	
-	
+	/**
+	 * Method to get all score cap data
+	 * @return
+	 */
 	@GetMapping("/score-cap")
 	public @ResponseBody List<ScoreCap> getScoreCap(){
 		return scoreCapService.getAllScoreCap();
 	}
 	
+	/**
+	 * Method for saving score cap data
+	 * @param scoreCap
+	 * @return
+	 */
 	@PostMapping("/addScoreCap")
 	public ScoreCap saveScoreCap(@RequestBody ScoreCap scoreCap) {
 		return scoreCapService.saveScoreCap(scoreCap);
 	}
 	
 	
-	
+	/**
+	 * Method for getting single score cap data by condition
+	 * @param condition
+	 * @return
+	 */
 	@GetMapping("/score-cap/{condition}")
 	public ResponseEntity<ScoreCap> getSoreCap(@PathVariable String condition){
 		ScoreCap scoreCap = scoreCapService.getScoreCapByCondition(condition);
 		return ResponseEntity.ok(scoreCap);
 	}
 	
+	/**
+	 * Method for updating score cap data
+	 * @param condition
+	 * @param scoreCapDetails
+	 * @return
+	 */
 	@PutMapping("/score-cap/{condition}")
 	public ResponseEntity<ScoreCap> updateScoreCap(@PathVariable String condition, @RequestBody ScoreCap scoreCapDetails){
 		ScoreCap scoreCap = scoreCapService.getScoreCapById(scoreCapDetails);
@@ -86,6 +98,11 @@ public class ScoreCapController {
 		return ResponseEntity.ok(updatedScoreCap);
 	}
 	
+	/**
+	 * Method for deleting score cap data
+	 * @param condition
+	 * @return
+	 */
 	@DeleteMapping("/score-cap/{condition}")
 	public ResponseEntity<Map<String, Boolean>> deleteScoreCap(@PathVariable String condition){
 		ScoreCap scoreCap = scoreCapService.getScoreCapByCondition(condition);
@@ -95,79 +112,4 @@ public class ScoreCapController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
-	/*
-	@Autowired
-	private ScoreCapService scoreCapService;
-
-	@GetMapping("/add-score-cap")
-	public String addRiskScore(Model model) {
-		model.addAttribute(ATTRIBUTE_NAME, new ScoreCap());
-		return "scoreCapAdd";
-	}
-	
-	@PostMapping("/addScoreCap")
-	public String saveScoreCap(@Valid @ModelAttribute("scoreCap") ScoreCap scoreCap, BindingResult bindingResult) {
-		
-		if(!scoreCapService.checkDataIfPresent(scoreCap)) {
-			bindingResult.addError(new FieldError("scoreCap", "condition", "Condition already present"));
-		}
-		
-		if(bindingResult.hasErrors()) {
-			logger.info("Validations errors while Adding.");
-			return "scoreCapAdd";
-		}
-		
-		 scoreCapService.saveScoreCap(scoreCap);
-		 return REDIRECT_PAGE;
-	}
-	
-	@GetMapping("/update-score-cap")
-	public String updateScoreCap(Model model) {
-		model.addAttribute(ATTRIBUTE_NAME, new ScoreCap());
-		return "scoreCapUpdate";
-	}
-	
-	@PostMapping("/updateScoreCap")
-	public String editScoreCap(@Valid @ModelAttribute("scoreCap") ScoreCap scoreCap, BindingResult bindingResult) {
-		
-		if(scoreCapService.checkDataIfPresent(scoreCap)) {
-			bindingResult.addError(new FieldError("scoreCap", "condition", "Condition already present"));
-		}
-		
-		if(bindingResult.hasErrors()) {
-			logger.info("Validations errors while updating.");
-			return "scoreCapUpdate";
-		}
-		
-		ScoreCap existingScoreCap = scoreCapService.getScoreCapById(scoreCap);
-		existingScoreCap.setCondition(scoreCap.getCondition());
-		existingScoreCap.setTotalRiskCappedScore(scoreCap.getTotalRiskCappedScore());
-		
-		scoreCapService.updateScoreCap(existingScoreCap);
-		return REDIRECT_PAGE;
-	}
-	
-	@GetMapping("/delete-score-cap")
-	public String removeScoreCap(Model model) {
-		model.addAttribute(ATTRIBUTE_NAME, new ScoreCap());
-		return "scoreCapDelete";
-	}
-	
-	@PostMapping("/deleteScoreCap")
-	public String deleteScoreCap(@Valid @ModelAttribute("scoreCap") ScoreCap scoreCap, BindingResult bindingResult) {
-		
-		if(scoreCapService.checkDataIfPresent(scoreCap)) {
-			bindingResult.addError(new FieldError("scoreCap", "condition", "Condition already present"));
-		}
-		
-		if(bindingResult.hasErrors()) {
-			logger.info("Validations errors while Deleting.");
-			return "scoreCapDelete";
-		}
-		
-		scoreCapService.deleteScoreCap(scoreCap);
-		return REDIRECT_PAGE;
-	}
-	*/
 }

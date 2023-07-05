@@ -7,6 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Model class for Dimensions
+ * @author parasgautam
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

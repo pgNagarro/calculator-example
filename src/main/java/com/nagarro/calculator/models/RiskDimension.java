@@ -8,6 +8,11 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.*;
 
+/**
+ * Entity class for Risk Dimension
+ * @author parasgautam
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

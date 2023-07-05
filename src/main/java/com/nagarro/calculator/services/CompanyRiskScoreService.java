@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.nagarro.calculator.models.CompanyRiskScore;
 
+/**
+ * Interface for Company Risk Score Service
+ * @author parasgautam
+ *
+ */
 public interface CompanyRiskScoreService {
 	
 	List<CompanyRiskScore> getAllCompanyRiskScore();

@@ -5,6 +5,11 @@ import java.util.List;
 
 import com.nagarro.calculator.models.Result;
 
+/**
+ * Interface for Result Service
+ * @author parasgautam
+ *
+ */
 public interface ResultService {
 	
 	List<Result> getResult();
