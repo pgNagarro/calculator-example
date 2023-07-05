@@ -142,7 +142,7 @@ public class ResultServiceImpl implements ResultService {
 				for (int l = 0; l < riskScoreList.get(m).getDimensions().size(); l++) {
 					if (formula_array[1]
 							.equals(riskScoreList.get(m).getDimensions().get(l).getDimensionName())) {
-						value1 = riskScoreList.get(m).getDimensions().get(l).getDimensionvalue();
+						value1 = riskScoreList.get(m).getDimensions().get(l).getDimensionValue();
 						break;
 					}
 				}
@@ -156,7 +156,7 @@ public class ResultServiceImpl implements ResultService {
 				for (int l = 0; l < riskScoreList.get(m).getDimensions().size(); l++) {
 					if (formula_array[2]
 							.equals(riskScoreList.get(m).getDimensions().get(l).getDimensionName())) {
-						value2 = riskScoreList.get(m).getDimensions().get(l).getDimensionvalue();
+						value2 = riskScoreList.get(m).getDimensions().get(l).getDimensionValue();
 						break;
 					}
 				}
@@ -185,7 +185,7 @@ public class ResultServiceImpl implements ResultService {
 							if (formula_array[k]
 									.equals(riskScoreList.get(m).getDimensions().get(l).getDimensionName())) {
 								variables.set(formula_array[k], Double.valueOf(
-										riskScoreList.get(m).getDimensions().get(l).getDimensionvalue()));
+										riskScoreList.get(m).getDimensions().get(l).getDimensionValue()));
 								flag = 0;
 								break;
 							}
@@ -252,7 +252,7 @@ public class ResultServiceImpl implements ResultService {
 
 			for (int j = 0; j < riskScoreList.get(i).getDimensions().size(); j++) {
 				List<Integer> values = new ArrayList<>();
-				values.add(riskScoreList.get(i).getDimensions().get(j).getDimensionvalue());
+				values.add(riskScoreList.get(i).getDimensions().get(j).getDimensionValue());
 				compareScore(level,riskScoreLevelList,values,j);
 			}
 			for (Map.Entry<String, Integer> entry : level.entrySet()) {

@@ -22,5 +22,5 @@ public class Dimensions {
 	private String dimensionName;
 	
 	@Column(name="value")
-	private int dimensionvalue;
+	private int dimensionValue;
 }

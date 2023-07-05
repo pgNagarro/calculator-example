@@ -11,7 +11,7 @@ import com.nagarro.calculator.models.CompanyRiskScore;
  * @author parasgautam
  *
  */
-public interface CompanyRiskScoreRepository extends JpaRepository<CompanyRiskScore, String>{
+public interface CompanyRiskScoreRepository extends JpaRepository<CompanyRiskScore, Integer>{
 
 	public List<CompanyRiskScore> findByCompanyName(String name);
 	
