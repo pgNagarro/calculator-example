@@ -1,5 +1,6 @@
 package com.nagarro.calculator.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.nagarro.calculator.models.RiskDimension;
@@ -17,12 +18,8 @@ public interface RiskDimensionService {
 	
 	RiskDimension saveRiskDimension(RiskDimension riskDimension);
 	
-	RiskDimension getRiskDimensionById(String dimension);
-	
-	RiskDimension getRiskDimensionByDimension(RiskDimension riskDimension);
+	RiskDimension getRiskDimensionById(String dimension) throws IOException;
 
 	void deleteRiskDimension(RiskDimension riskDimension);
-//	
-//	boolean checkDataIfPresent(RiskDimension riskDimension);
-//	
+
 }

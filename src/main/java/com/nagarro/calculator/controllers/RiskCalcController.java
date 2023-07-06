@@ -1,5 +1,6 @@
 package com.nagarro.calculator.controllers;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.calculator.models.RiskCalc;
 import com.nagarro.calculator.services.RiskCalcService;
 
 /**
- * 
+ * Controller class for risk calculation logic
  * @author parasgautam
  *
- * Controller class for risk calculation logic
  */
 @RestController
 @CrossOrigin(origins = "*") 
@@ -43,8 +42,16 @@ public class RiskCalcController {
 	 * @return
 	 */
 	@GetMapping("/risk-calc-logic")
-	public @ResponseBody List<RiskCalc> getAllRiskCalcLogic(){
-		return riskCalcService.getAllRiskCalcLogic();
+	public ResponseEntity<List<RiskCalc>> getAllRiskCalcLogic(){
+		
+		logger.info("Request received for fetching all risk calculation logic data");
+		
+		List<RiskCalc> riskCalcList = riskCalcService.getAllRiskCalcLogic();
+		
+		logger.info("Request completed for fetching all risk calculation logic data");
+		
+		return ResponseEntity.ok(riskCalcList);
+		
 	}
 	
 	/**
@@ -53,8 +60,15 @@ public class RiskCalcController {
 	 * @return
 	 */
 	@PostMapping("/addRiskCalcLogic")
-	public RiskCalc saveRiskCalcLogic(@RequestBody RiskCalc riskCalc) {
-		return riskCalcService.saveRiskCalc(riskCalc);
+	public ResponseEntity<RiskCalc> saveRiskCalcLogic(@RequestBody RiskCalc riskCalc) {
+		
+		logger.info("Request received for adding risk calculation logic data");
+		
+		RiskCalc newRiskCalc = riskCalcService.saveRiskCalc(riskCalc);
+		
+		logger.info("Request completed for adding risk calculation logic data");
+		
+		return ResponseEntity.ok(newRiskCalc);
 	}
 	
 	/**
@@ -64,8 +78,27 @@ public class RiskCalcController {
 	 */
 	@GetMapping("/risk-calc-logic/{elementName}")
 	public ResponseEntity<RiskCalc> getRiskCalcByElementName(@PathVariable String elementName){
-		RiskCalc riskCalc = riskCalcService.getRiskCalcLogicByName(elementName);
-		return ResponseEntity.ok(riskCalc);
+		
+		logger.info("Request received for getting single risk calculation logic data");
+		
+		RiskCalc riskCalc;
+		
+		try {
+			
+			riskCalc = riskCalcService.getRiskCalcLogicByName(elementName);
+			
+			logger.info("Request completed for getting single risk calculation logic data");
+			
+			return ResponseEntity.ok(riskCalc);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}
+		
+		
 	}
 	
 	/**
@@ -76,11 +109,31 @@ public class RiskCalcController {
 	 */
 	@PutMapping("/risk-calc-logic/{elementName}")
 	public ResponseEntity<RiskCalc> updateRiskCalc(@PathVariable String elementName, @RequestBody RiskCalc riskCalcDetails){
-		RiskCalc riskCalc = riskCalcService.getRiskCalcLogicById(riskCalcDetails);	
-		riskCalc.setElementName(riskCalcDetails.getElementName());
-		riskCalc.setFormula(riskCalcDetails.getFormula());
-		RiskCalc updatedRiskCalc = riskCalcService.saveRiskCalc(riskCalc);
-		return ResponseEntity.ok(updatedRiskCalc);
+		
+		logger.info("Request received for updating risk calculation logic data");
+		
+		RiskCalc riskCalc;
+		
+		try {
+			
+			riskCalc = riskCalcService.getRiskCalcLogicByName(riskCalcDetails.getElementName());
+			riskCalc.setElementName(riskCalcDetails.getElementName());
+			riskCalc.setFormula(riskCalcDetails.getFormula());
+			
+			RiskCalc updatedRiskCalc = riskCalcService.saveRiskCalc(riskCalc);
+			
+			logger.info("Request received for updating risk calculation logic data");
+			
+			return ResponseEntity.ok(updatedRiskCalc);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}	
+		
+		
 	}
 	
 	/**
@@ -90,11 +143,33 @@ public class RiskCalcController {
 	 */
 	@DeleteMapping("/risk-calc-logic/{elementName}")
 	public ResponseEntity<Map<String, Boolean>> deleteRiskCalc(@PathVariable String elementName){
-		RiskCalc riskCalc = riskCalcService.getRiskCalcLogicByName(elementName);
-		riskCalcService.deleteRiskCalc(riskCalc);
-		Map<String,Boolean> response = new HashMap<>();
-		response.put("Deleted",Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		
+		logger.info("Request received for deleting risk calculating logic data");
+		
+		RiskCalc riskCalc;
+		
+		try {
+			
+			riskCalc = riskCalcService.getRiskCalcLogicByName(elementName);
+			riskCalcService.deleteRiskCalc(riskCalc);
+			
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Deleted",Boolean.TRUE);
+			
+			logger.info("Request completed for deleting risk calculating logic data");
+			
+			return ResponseEntity.ok(response);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Unable to Delete",Boolean.FALSE);
+			
+			return ResponseEntity.ok(null);
+			
+		}
+		
 	}
 
 }

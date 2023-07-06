@@ -1,5 +1,6 @@
 package com.nagarro.calculator.controllers;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.nagarro.calculator.models.RiskDimension;
-import com.nagarro.calculator.services.CompanyRiskScoreService;
 import com.nagarro.calculator.services.RiskDimensionService;
 
 /**
@@ -36,25 +35,22 @@ public class RiskDimensionController {
 	@Autowired
 	private RiskDimensionService riskDimensionService;
 	
-	@Autowired
-	private CompanyRiskScoreService companyRiskScoreService;
-	
-	/*
-	 * @GetMapping("/add-risk-dimension") public @ResponseBody List<Dimensions>
-	 * addRiskDimension(){ List<Dimensions> list =
-	 * companyRiskScoreService.getAllCompanyRiskScore().get(0).getDimensions();
-	 * for(int i=0 ; i<list.size() ; i++) { RiskDimension riskDimension = new
-	 * RiskDimension(list.get(i).getDimensionName(),0);
-	 * riskDimensionService.addRiskDimension(riskDimension); } return list; }
-	 */
 	
 	/**
 	 * Method to get all risk dimension data
 	 * @return
 	 */
 	@GetMapping("/risk-dimension")
-	public @ResponseBody List<RiskDimension>getRiskDimension(){
-		return riskDimensionService.getAllRiskDimension();
+	public ResponseEntity<List<RiskDimension>> getRiskDimension(){
+		
+		logger.info("Request received for fetching all risk dimension data");
+		
+		List<RiskDimension> riskDimensionList = riskDimensionService.getAllRiskDimension();
+		
+		logger.info("Request completed for fetching all risk dimension data");
+		
+		return ResponseEntity.ok(riskDimensionList);
+		
 	}
 	
 	/**
@@ -63,8 +59,16 @@ public class RiskDimensionController {
 	 * @return
 	 */
 	@PostMapping("/addRiskDimension")
-	public RiskDimension saveRiskDimension(@RequestBody RiskDimension riskDimension) {
-		return riskDimensionService.saveRiskDimension(riskDimension);
+	public ResponseEntity<RiskDimension> saveRiskDimension(@RequestBody RiskDimension riskDimension) {
+		
+		logger.info("Request received for risk dimension data");
+		
+		RiskDimension newRiskDimension = riskDimensionService.saveRiskDimension(riskDimension);
+		
+		logger.info("Request completed for risk dimension data");
+		
+		return ResponseEntity.ok(newRiskDimension);
+		
 	}
 	
 	/**
@@ -73,9 +77,27 @@ public class RiskDimensionController {
 	 * @return
 	 */
 	@GetMapping("/risk-dimension/{dimension}")
-	public ResponseEntity<RiskDimension> getRiskDimension(@PathVariable String dimension){
-		RiskDimension riskDimension = riskDimensionService.getRiskDimensionById(dimension);
-		return ResponseEntity.ok(riskDimension);
+	public ResponseEntity<RiskDimension> getRiskDimensionByDimension(@PathVariable String dimension){
+		
+		logger.info("Request received for getting single risk dimension");
+		
+		RiskDimension riskDimension;
+		
+		try {
+			
+			riskDimension = riskDimensionService.getRiskDimensionById(dimension);
+			
+			logger.info("Request completed for getting single risk dimension");
+			
+			return ResponseEntity.ok(riskDimension);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}
+		
 	}
 	
 	/**
@@ -86,11 +108,31 @@ public class RiskDimensionController {
 	 */
 	@PutMapping("/risk-dimension/{dimension}")
 	public ResponseEntity<RiskDimension> updateRiskDimension(@PathVariable String dimension, @RequestBody RiskDimension riskDimensionDetails){
-		RiskDimension riskDimension = riskDimensionService.getRiskDimensionByDimension(riskDimensionDetails);	
-		riskDimension.setDimension(riskDimensionDetails.getDimension());
-		riskDimension.setWeight(riskDimensionDetails.getWeight());
-		RiskDimension updatedRiskDimension = riskDimensionService.saveRiskDimension(riskDimension);
-		return ResponseEntity.ok(updatedRiskDimension);
+		
+		logger.info("Request received for updating risk dimension data");
+		
+		RiskDimension riskDimension;
+		
+		try {
+			
+			riskDimension = riskDimensionService.getRiskDimensionById(riskDimensionDetails.getDimension());
+			
+			riskDimension.setDimension(riskDimensionDetails.getDimension());
+			riskDimension.setWeight(riskDimensionDetails.getWeight());
+			RiskDimension updatedRiskDimension = riskDimensionService.saveRiskDimension(riskDimension);
+			
+			logger.info("Request completed for updating risk dimension data");
+			
+			return ResponseEntity.ok(updatedRiskDimension);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}	
+		
+		
 	}
 	
 	/**
@@ -100,10 +142,31 @@ public class RiskDimensionController {
 	 */
 	@DeleteMapping("/risk-dimension/{dimension}")
 	public ResponseEntity<Map<String, Boolean>> deleteRiskDimension(@PathVariable String dimension){
-		RiskDimension riskDimension = riskDimensionService.getRiskDimensionById(dimension);
-		riskDimensionService.deleteRiskDimension(riskDimension);
-		Map<String,Boolean> response = new HashMap<>();
-		response.put("Deleted",Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		
+		logger.info("Request received for deleting risk dimension");
+		
+		RiskDimension riskDimension;
+		
+		try {
+			
+			riskDimension = riskDimensionService.getRiskDimensionById(dimension);
+			
+			riskDimensionService.deleteRiskDimension(riskDimension);
+			
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Deleted",Boolean.TRUE);
+			
+			logger.info("Request completed for deleting risk dimension");
+			
+			return ResponseEntity.ok(response);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Unable to Delete",Boolean.FALSE);
+			
+			return ResponseEntity.ok(response);
+		}	
 	}	
 }

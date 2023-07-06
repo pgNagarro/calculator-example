@@ -1,6 +1,6 @@
 package com.nagarro.calculator.controllers;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.calculator.models.ScoreCap;
@@ -38,27 +37,21 @@ public class ScoreCapController {
 	@Autowired
 	private ScoreCapService scoreCapService;
 	
-	
-	List<ScoreCap> list = Arrays.asList(new ScoreCap("One \"very high risk\"",40),
-										new ScoreCap("Two \"very high risk\"",30),
-										new ScoreCap("One \"high risk\"",60),
-										new ScoreCap("Two \"high risk\"",50));
-	
-	@GetMapping("/add-score-cap")
-	public @ResponseBody List<ScoreCap> addScoreCap(){
-		for(int i=0; i<list.size() ; i++) {
-			scoreCapService.addScoreCap(list.get(i));
-		}
-		return list;
-	}
-	
 	/**
 	 * Method to get all score cap data
 	 * @return
 	 */
 	@GetMapping("/score-cap")
-	public @ResponseBody List<ScoreCap> getScoreCap(){
-		return scoreCapService.getAllScoreCap();
+	public ResponseEntity<List<ScoreCap>> getScoreCap(){
+		
+		logger.info("Request received for fetching all score cap data");
+		
+		List<ScoreCap> scoreCapList = scoreCapService.getAllScoreCap();
+		
+		logger.info("Request completed for fetching all score cap data");
+		
+		return ResponseEntity.ok(scoreCapList);
+		
 	}
 	
 	/**
@@ -67,8 +60,16 @@ public class ScoreCapController {
 	 * @return
 	 */
 	@PostMapping("/addScoreCap")
-	public ScoreCap saveScoreCap(@RequestBody ScoreCap scoreCap) {
-		return scoreCapService.saveScoreCap(scoreCap);
+	public ResponseEntity<ScoreCap> saveScoreCap(@RequestBody ScoreCap scoreCap) {
+		
+		logger.info("Request received for adding score cap data");
+		
+		ScoreCap newScoreCap = scoreCapService.saveScoreCap(scoreCap);
+		
+		logger.info("Request completed for adding score cap data");
+		
+		return ResponseEntity.ok(newScoreCap);
+		
 	}
 	
 	
@@ -79,8 +80,26 @@ public class ScoreCapController {
 	 */
 	@GetMapping("/score-cap/{condition}")
 	public ResponseEntity<ScoreCap> getSoreCap(@PathVariable String condition){
-		ScoreCap scoreCap = scoreCapService.getScoreCapByCondition(condition);
-		return ResponseEntity.ok(scoreCap);
+		
+		logger.info("Request received for getting single score cap data");
+		
+		ScoreCap scoreCap;
+		
+		try {
+			
+			scoreCap = scoreCapService.getScoreCapByCondition(condition);
+			
+			logger.info("Request completed for getting single score cap data");
+			
+			return ResponseEntity.ok(scoreCap);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}	
+		
 	}
 	
 	/**
@@ -91,11 +110,29 @@ public class ScoreCapController {
 	 */
 	@PutMapping("/score-cap/{condition}")
 	public ResponseEntity<ScoreCap> updateScoreCap(@PathVariable String condition, @RequestBody ScoreCap scoreCapDetails){
-		ScoreCap scoreCap = scoreCapService.getScoreCapById(scoreCapDetails);
-		scoreCap.setCondition(scoreCapDetails.getCondition());
-		scoreCap.setTotalRiskCappedScore(scoreCapDetails.getTotalRiskCappedScore());
-		ScoreCap updatedScoreCap = scoreCapService.saveScoreCap(scoreCap);
-		return ResponseEntity.ok(updatedScoreCap);
+		
+		logger.info("Request received for updating score cap data");
+		
+		ScoreCap scoreCap;
+		
+		try {
+			
+			scoreCap = scoreCapService.getScoreCapByCondition(scoreCapDetails.getCondition());	
+			scoreCap.setCondition(scoreCapDetails.getCondition());
+			scoreCap.setTotalRiskCappedScore(scoreCapDetails.getTotalRiskCappedScore());
+			
+			ScoreCap updatedScoreCap = scoreCapService.saveScoreCap(scoreCap);
+			
+			logger.info("Request received for updating score cap data");
+			
+			return ResponseEntity.ok(updatedScoreCap);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+		}
+
 	}
 	
 	/**
@@ -105,11 +142,33 @@ public class ScoreCapController {
 	 */
 	@DeleteMapping("/score-cap/{condition}")
 	public ResponseEntity<Map<String, Boolean>> deleteScoreCap(@PathVariable String condition){
-		ScoreCap scoreCap = scoreCapService.getScoreCapByCondition(condition);
-		scoreCapService.deleteScoreCap(scoreCap);
-		Map<String,Boolean> response = new HashMap<>();
-		response.put("Deleted",Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		
+		logger.info("Request received for deleting score cap data");
+		
+		ScoreCap scoreCap;
+		
+		try {
+			
+			scoreCap = scoreCapService.getScoreCapByCondition(condition);
+			scoreCapService.deleteScoreCap(scoreCap);
+			
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Deleted",Boolean.TRUE);
+			
+			logger.info("Request received for deleting score cap data");
+			
+			return ResponseEntity.ok(response);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Unable to Delete",Boolean.FALSE);
+			return ResponseEntity.ok(response);
+			
+		}
+		
+		
 	}
 	
 }

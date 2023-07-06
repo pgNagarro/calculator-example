@@ -1,6 +1,6 @@
 package com.nagarro.calculator.controllers;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.calculator.models.RiskScoreLevel;
@@ -37,28 +36,21 @@ public class RiskScoreLevelController {
 	@Autowired
 	private RiskScoreLevelService riskScoreLevelService;
 	
-	
-	List<RiskScoreLevel> list = Arrays.asList(new RiskScoreLevel("81-100","Very low risk"),
-												new RiskScoreLevel("61-80","Low risk"),
-												new RiskScoreLevel("41-60","Intermediate"),
-												new RiskScoreLevel("21-40","High risk"),
-												new RiskScoreLevel("01-20","Very high risk"));
-	
-	@GetMapping("/add-risk-score-level")
-	public @ResponseBody List<RiskScoreLevel> addRiskScoreLevel(){
-		for(int i=0; i<list.size() ; i++) {
-			riskScoreLevelService.addRiskScoreLevel(list.get(i));
-		}
-		return list;
-	}
-	
 	/**
 	 * Method to get all risk score level data
 	 * @return
 	 */
 	@GetMapping("/risk-score-level")
-	public @ResponseBody List<RiskScoreLevel> getRiskScoreLevel(){
-		return riskScoreLevelService.getAllRiskScoreLevel();
+	public ResponseEntity<List<RiskScoreLevel>> getRiskScoreLevel(){
+		
+		logger.info("Request received for fetching all the risk score level data");
+		
+		List<RiskScoreLevel> riskScoreLevelList = riskScoreLevelService.getAllRiskScoreLevel();
+		
+		logger.info("Request completed for fetching all the risk score level data");
+		
+		return ResponseEntity.ok(riskScoreLevelList);
+		
 	}
 	
 	/**
@@ -67,8 +59,16 @@ public class RiskScoreLevelController {
 	 * @return
 	 */
 	@PostMapping("/addRiskScoreLevel")
-	public RiskScoreLevel saveRiskScoreLevel(@RequestBody RiskScoreLevel riskScoreLevel) {
-		return riskScoreLevelService.saveRiskScoreLevel(riskScoreLevel);
+	public ResponseEntity<RiskScoreLevel> saveRiskScoreLevel(@RequestBody RiskScoreLevel riskScoreLevel) {
+		
+		logger.info("Request received for adding risk score level data");
+		
+		RiskScoreLevel newRiskScoreLevel = riskScoreLevelService.saveRiskScoreLevel(riskScoreLevel);
+		
+		logger.info("Request completed for adding risk score level data");
+		
+		return ResponseEntity.ok(newRiskScoreLevel);
+		
 	}
 	
 	/**
@@ -77,27 +77,100 @@ public class RiskScoreLevelController {
 	 * @return
 	 */
 	@GetMapping("/risk-score-level/{score}")
-	public ResponseEntity<RiskScoreLevel> getRiskScoreLevel(@PathVariable String score){
-		RiskScoreLevel riskScoreLevel = riskScoreLevelService.getRiskScoreLevelByScore(score);
-		return ResponseEntity.ok(riskScoreLevel);
+	public ResponseEntity<RiskScoreLevel> getRiskScoreLevelByScore(@PathVariable String score){
+		
+		logger.info("Request received for getting single risk score level data");
+		
+		RiskScoreLevel riskScoreLevel;
+		
+		try {
+			
+			riskScoreLevel = riskScoreLevelService.getRiskScoreLevelByScore(score);
+			
+			logger.info("Request completed for getting single risk score level data");
+			
+			return ResponseEntity.ok(riskScoreLevel);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}
+		
+		
 	}
 	
+	/**
+	 * Method for updating risk score level data
+	 * @param score
+	 * @param riskScoreLevelDetails
+	 * @return
+	 */
 	@PutMapping("/risk-score-level/{score}")
 	public ResponseEntity<RiskScoreLevel> updateRiskScoreLevel(@PathVariable String score, @RequestBody RiskScoreLevel riskScoreLevelDetails){
-		RiskScoreLevel riskScoreLevel = riskScoreLevelService.getRiskScoreLevelById(riskScoreLevelDetails);	
-		riskScoreLevel.setScore(riskScoreLevelDetails.getScore());
-		riskScoreLevel.setLevel(riskScoreLevelDetails.getLevel());
-		RiskScoreLevel updatedRiskScoreLevel = riskScoreLevelService.saveRiskScoreLevel(riskScoreLevel);
-		return ResponseEntity.ok(updatedRiskScoreLevel);
+		
+		logger.info("Request received for updating risk score level");
+		
+		RiskScoreLevel riskScoreLevel;
+		
+		try {
+			
+			riskScoreLevel = riskScoreLevelService.getRiskScoreLevelByScore(riskScoreLevelDetails.getScore());
+			
+			riskScoreLevel.setScore(riskScoreLevelDetails.getScore());
+			riskScoreLevel.setLevel(riskScoreLevelDetails.getLevel());
+			
+			RiskScoreLevel updatedRiskScoreLevel = riskScoreLevelService.saveRiskScoreLevel(riskScoreLevel);
+			
+			logger.info("Request completed for updating risk score level");
+			
+			return ResponseEntity.ok(updatedRiskScoreLevel);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}	
+		
+		
 	}
 	
+	/**
+	 * Method for deleting risk score level data
+	 * @param score
+	 * @return
+	 */
 	@DeleteMapping("/risk-score-level/{score}")
 	public ResponseEntity<Map<String, Boolean>> deleteRiskScoreLevel(@PathVariable String score){
-		RiskScoreLevel riskScoreLevel = riskScoreLevelService.getRiskScoreLevelByScore(score);
-		riskScoreLevelService.deleteRiskScoreLevel(riskScoreLevel);
-		Map<String,Boolean> response = new HashMap<>();
-		response.put("Deleted",Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		
+		logger.info("Request received for deleting risk score level");
+		
+		RiskScoreLevel riskScoreLevel;
+		
+		try {
+			riskScoreLevel = riskScoreLevelService.getRiskScoreLevelByScore(score);
+			
+			riskScoreLevelService.deleteRiskScoreLevel(riskScoreLevel);
+			
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Deleted",Boolean.TRUE);
+			
+			logger.info("Request completed for deleting risk score level");
+			
+			return ResponseEntity.ok(response);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Unable to Delete",Boolean.FALSE);
+			return ResponseEntity.ok(null);
+			
+		}
+		
+		
 	}
 
 }

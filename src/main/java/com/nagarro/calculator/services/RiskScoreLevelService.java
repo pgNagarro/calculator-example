@@ -1,5 +1,6 @@
 package com.nagarro.calculator.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.nagarro.calculator.models.RiskScoreLevel;
@@ -17,12 +18,8 @@ public interface RiskScoreLevelService {
 
 	RiskScoreLevel saveRiskScoreLevel(RiskScoreLevel riskScoreLevel);
 
-	RiskScoreLevel getRiskScoreLevelByScore(String score);
-	
-	RiskScoreLevel getRiskScoreLevelById(RiskScoreLevel riskScoreLevel);
+	RiskScoreLevel getRiskScoreLevelByScore(String score) throws IOException;
 	
 	void deleteRiskScoreLevel(RiskScoreLevel riskScoreLevel);
-//	
-//	boolean checkDataIfPresent(RiskScoreLevel riskScoreLevel);
-	
+
 }

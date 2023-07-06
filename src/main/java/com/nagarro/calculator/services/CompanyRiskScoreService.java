@@ -14,19 +14,13 @@ public interface CompanyRiskScoreService {
 	
 	List<CompanyRiskScore> getAllCompanyRiskScore();
 	
-	void addCompanyRiskScore(CompanyRiskScore companyRiskScore);	
-
-//	List<CompanyRiskScore> getAllRiskScore();
-//	
 	void saveRiskScore(CompanyRiskScore companyRiskScore) throws IOException;
-//	
-	CompanyRiskScore getCompanyRiskScoreByCompanyName(String companyName);
+	
+	CompanyRiskScore getCompanyRiskScoreByCompanyName(String companyName) throws IOException;
 	
 	CompanyRiskScore updateRiskScore(CompanyRiskScore companyRiskScore);
-//	
-//	CompanyRiskScore updateCompanyRiskScore(CompanyRiskScore companyRiskScore);
-//	
+	
 	void deleteCompanyRiskScore(CompanyRiskScore companyRiskScore);
-//	
+	
 	boolean checkDataIfPresent(CompanyRiskScore companyRiskScore);
 }

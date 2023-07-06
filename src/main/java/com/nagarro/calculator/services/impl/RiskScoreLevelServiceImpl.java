@@ -1,5 +1,6 @@
 package com.nagarro.calculator.services.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -21,66 +22,70 @@ public class RiskScoreLevelServiceImpl implements RiskScoreLevelService{
 
 	private static final Logger logger = LoggerFactory.getLogger(RiskScoreLevelServiceImpl.class);
 	
+	
 	@Autowired
 	private RiskScoreLevelRepository riskScoreLevelRepository;
 	
+	/**
+	 * Method to add risk score level 
+	 */
 	@Override
 	public void addRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
+		
 		logger.info("start : addRiskScoreLevel");
 		riskScoreLevelRepository.save(riskScoreLevel);	
+		
 	}
 
+	/**
+	 * Method to get risk score level data 
+	 */
 	@Override
 	public List<RiskScoreLevel> getAllRiskScoreLevel() {
+		
 		logger.info("start : getAllRiskScoreLevel");
 		return riskScoreLevelRepository.findAll();
+		
 	}
 	
+	/**
+	 * Method to save risk score level data
+	 */
 	@Override
 	public RiskScoreLevel saveRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
+		
+		logger.info("start : saveRiskScoreLevel");
 		return riskScoreLevelRepository.save(riskScoreLevel);
+		
 	}
 	
-	
+	/**
+	 * Method to get risk score level data by score 
+	 * @throws IOException 
+	 */
 	@Override
-	public RiskScoreLevel getRiskScoreLevelById(RiskScoreLevel riskScoreLevel) {
-		List<RiskScoreLevel> riskScoreLevels = riskScoreLevelRepository.findByScore(riskScoreLevel.getScore());
-		return riskScoreLevels.get(0);
-	}
-	
-	@Override
-	public RiskScoreLevel getRiskScoreLevelByScore(String score) {
+	public RiskScoreLevel getRiskScoreLevelByScore(String score) throws IOException {
+		
+		logger.info("start : getRiskScoreLevelByScore");
+		
 		List<RiskScoreLevel> riskScoreLevels = riskScoreLevelRepository.findByScore(score);
+		
+		if(riskScoreLevels.isEmpty()) {
+			throw new IOException("Risk Score Level not found");
+		}
+		
 		return riskScoreLevels.get(0);
+		
 	}
 	
+	/**
+	 * Method to delete risk score level data
+	 */
 	@Override
 	public void deleteRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
-		riskScoreLevelRepository.deleteById(riskScoreLevel.getScore());		
+		
+		logger.info("start : deleteRiskScoreLevel");
+		riskScoreLevelRepository.deleteById(riskScoreLevel.getScore());	
+		
 	}
-	
-	/*
-	@Override
-	public List<RiskScoreLevel> getAllRiskScoreLevel() {
-		return riskScoreLevelRepository.findAll();
-	}
-
-	
-
-	
-
-	@Override
-	public RiskScoreLevel updateRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
-		return riskScoreLevelRepository.save(riskScoreLevel);
-	}
-
-	
-
-	@Override
-	public boolean checkDataIfPresent(RiskScoreLevel riskScoreLevel) {
-		List<RiskScoreLevel> riskScoreLevels = riskScoreLevelRepository.findByScore(riskScoreLevel.getScore());
-		return riskScoreLevels.isEmpty();
-	}
-	*/
-
 }

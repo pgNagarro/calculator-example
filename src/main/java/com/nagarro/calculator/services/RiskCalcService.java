@@ -1,5 +1,6 @@
 package com.nagarro.calculator.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.nagarro.calculator.models.RiskCalc;
@@ -10,21 +11,13 @@ import com.nagarro.calculator.models.RiskCalc;
  *
  */
 public interface RiskCalcService {
-	
-	
-	
 		
 	List<RiskCalc> getAllRiskCalcLogic();
-
-	void addRiskCalc(RiskCalc riskCalc);
-	RiskCalc getRiskCalcLogicByName(String name);
 	
-	RiskCalc saveRiskCalc(RiskCalc riskCalc);
+	RiskCalc getRiskCalcLogicByName(String name) throws IOException;
 	
-	RiskCalc getRiskCalcLogicById(RiskCalc riskCalc);
+	RiskCalc saveRiskCalc(RiskCalc riskCalc);	
 
 	void deleteRiskCalc(RiskCalc riskCalc);
-//	
-//	boolean checkDataIfPresent(RiskCalc riskCalc);
 	
 }

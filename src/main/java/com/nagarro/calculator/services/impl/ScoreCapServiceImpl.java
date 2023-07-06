@@ -1,5 +1,6 @@
 package com.nagarro.calculator.services.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,65 +25,66 @@ public class ScoreCapServiceImpl implements ScoreCapService{
 	@Autowired
 	private ScoreCapRepository scoreCapRepository;
 	
-	@Override
-	public void addScoreCap(ScoreCap scoreCaps) {
-		scoreCapRepository.save(scoreCaps);
-	}
 
+	/**
+	 * Method to get all score cap data
+	 */
 	@Override
 	public List<ScoreCap> getAllScoreCap() {
+		
+		logger.info("start : getAllScoreCap");
 		return scoreCapRepository.findAll();
 	}
 
+	/**
+	 * Method to find score cap data by condition
+	 */
 	@Override
 	public ScoreCap findScoreCap(String condition) {
-		logger.info("start : finScoreCap");
+		
+		logger.info("start : findScoreCap");
 		return scoreCapRepository.findByCondition(condition);
+		
 	}
 	
+	/**
+	 * Method to save score cap data
+	 */
 	@Override
 	public ScoreCap saveScoreCap(ScoreCap scoreCap) {
+		
+		logger.info("start : saveScoreCap");
 		return scoreCapRepository.save(scoreCap);
+		
 	}
 	
-	@Override
-	public ScoreCap getScoreCapById(ScoreCap scoreCap) {
-		ScoreCap scoreCaps = scoreCapRepository.findByCondition(scoreCap.getCondition());
-		return scoreCaps;
-	}
 	
+	/**
+	 * Method to single get score cap data by condition
+	 * @throws IOException 
+	 */
 	@Override
-	public ScoreCap getScoreCapByCondition(String condition) {
+	public ScoreCap getScoreCapByCondition(String condition) throws IOException {
+		
+		logger.info("start : getScoreCapByCondition");
 		ScoreCap scoreCaps = scoreCapRepository.findByCondition(condition);
+		
+		if(scoreCaps==null) {
+			throw new IOException("Score cap data not found");
+		}
 		return scoreCaps;
+		
 	}
 	
+	/**
+	 * Method to delete score cap data
+	 */
 	@Override
 	public void deleteScoreCap(ScoreCap scoreCap) {
+		
+		logger.info("start : deleteScoreCap");
 		scoreCapRepository.deleteById(scoreCap.getCondition());	
+		
 	}
-/*
-	@Override
-	public List<ScoreCap> getAllScoreCap() {
-		return scoreCapRepository.findAll();
-	}
-
-	
-
-	
-
-	@Override
-	public ScoreCap updateScoreCap(ScoreCap scoreCap) {
-		return scoreCapRepository.save(scoreCap);
-	}
-
-	
-
-	@Override
-	public boolean checkDataIfPresent(ScoreCap scoreCap) {
-		List<ScoreCap> scoreCaps = scoreCapRepository.findByCondition(scoreCap.getCondition());
-		return scoreCaps.isEmpty();
-	}
-	*/
 
 }

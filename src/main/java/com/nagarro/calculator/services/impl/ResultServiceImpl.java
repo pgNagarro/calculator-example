@@ -63,19 +63,32 @@ public class ResultServiceImpl implements ResultService {
 	@Autowired
 	private JobService jobService;
 
+	/**
+	 * Method to add result to repo
+	 */
 	@Override
 	public void addResult(Result result) {
 		resultRepository.save(result);
 	}
+	
+	/**
+	 * Method to get result
+	 */
+	@Override
+	public List<Result> getResult() {
+		return resultRepository.findAll();
+	}
 
+	/**
+	 * Method to calculate result
+	 */
 	@Override
 //	@Scheduled(fixedRate = 10000)
 	public void calculateResult() {
 		
+		logger.info("start : calculateResult");
 		Job job = new Job();
 		
-		logger.info("start : calculateResult");
-
 		try {
 			
 			List<CompanyRiskScore> riskScoreList = companyRiskScoreService.getAllCompanyRiskScore();
@@ -99,7 +112,7 @@ public class ResultServiceImpl implements ResultService {
 				
 				for (int i = 0; i < 10; i++) { // for evaluating values if missing then skipping					
 					evaluateFormula(riskScoreList,riskCalcList,riskDimensionList,elementResultMap,operations,m);
-				} // 10
+				}
 				
 				logger.info(riskScoreList.get(m).getCompanyName() + " " + elementResultMap);
 				
@@ -119,7 +132,17 @@ public class ResultServiceImpl implements ResultService {
 		}
 
 	}
-
+	
+	/**
+	 * Method for formula evaluation
+	 * @param riskScoreList
+	 * @param riskCalcList
+	 * @param riskDimensionList
+	 * @param elementResultMap
+	 * @param operations
+	 * @param m
+	 * @throws IOException
+	 */
 	public void evaluateFormula(List<CompanyRiskScore> riskScoreList,List<RiskCalc> riskCalcList,List<RiskDimension> riskDimensionList, Map<String, Integer> elementResultMap, String operations,int m) throws IOException{
 		
 		for (int j = 0; j < riskCalcList.size(); j++) {
@@ -211,6 +234,7 @@ public class ResultServiceImpl implements ResultService {
 
 	
 	// Method to insert calculated values from risk calc logic to output table
+	
 		public void insertValuesInResultTable(Map<String, Integer> elementResultMap, List<CompanyRiskScore> riskScoreList,
 				int companyRiskScore) {
 			Result result = new Result();
@@ -219,7 +243,6 @@ public class ResultServiceImpl implements ResultService {
 			result.setTotalRiskCappedScore(elementResultMap.get("total_risk_capped_score"));
 
 			for (Map.Entry<String, Integer> entry : elementResultMap.entrySet()) {
-			//	System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 				OutputValues outputValues = new OutputValues(entry.getKey(), entry.getValue());
 				outputValuesList.add(outputValues);
 			}
@@ -229,6 +252,7 @@ public class ResultServiceImpl implements ResultService {
 		
 		
 	// Method to calculate total risk capped score
+		
 	public Map<String, Integer> calculateTotalRiskedCappedScore() throws IOException{
 		
 		logger.info("start : calculateTotalRiskedCappedScore");
@@ -239,11 +263,7 @@ public class ResultServiceImpl implements ResultService {
 
 		List<CompanyRiskScore> riskScoreList = companyRiskScoreService.getAllCompanyRiskScore();
 		List<RiskScoreLevel> riskScoreLevelList = riskScoreLevelService.getAllRiskScoreLevel();
-		
-//		if( riskScoreList.isEmpty() || riskScoreLevelList.isEmpty() ) {
-//			logger.error("company_risk_score table or risk_score_level table is empty in database");
-//			throw new IOException("One or multiple tables are empty in database");
-//		}
+
 
 		for (int i = 0; i < riskScoreList.size(); i++) {
 
@@ -283,9 +303,6 @@ public class ResultServiceImpl implements ResultService {
 		}
 	}
 
-	@Override
-	public List<Result> getResult() {
-		return resultRepository.findAll();
-	}
+	
 	
 }

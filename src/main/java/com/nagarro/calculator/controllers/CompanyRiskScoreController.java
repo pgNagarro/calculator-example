@@ -13,23 +13,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.nagarro.calculator.models.CompanyRiskScore;
-import com.nagarro.calculator.models.Dimensions;
-import com.nagarro.calculator.models.RiskCalc;
 import com.nagarro.calculator.services.CompanyRiskScoreService;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 /**
- * 
- * @author parasgautam
- * 	 
  * Controller class for Company Risk Score to handle operations
  * on company risk score data
+ * 
+ * @author parasgautam
+ * 
  */
 @RestController
 @CrossOrigin(origins="*")
@@ -47,8 +44,16 @@ public class CompanyRiskScoreController {
 	 * @return
 	 */
 	@GetMapping("/risk-score")
-	public List<CompanyRiskScore> getCompanyRiskScore() {
-		return companyRiskScoreService.getAllCompanyRiskScore();
+	public ResponseEntity<List<CompanyRiskScore>> getCompanyRiskScore() {
+		
+		logger.info("Request received for fetching company risk scores");
+		
+		List<CompanyRiskScore> companyRiskScoreList = companyRiskScoreService.getAllCompanyRiskScore();
+		
+		logger.info("Request completed for fetching company risk scores");
+		
+		return ResponseEntity.ok(companyRiskScoreList);
+		
 	}
 	
 	/**
@@ -58,15 +63,19 @@ public class CompanyRiskScoreController {
 	 * @throws IOException 
 	 */
 	@PostMapping("/addRiskScore")	
-	public CompanyRiskScore saveRiskScore(@RequestBody CompanyRiskScore companyRiskScore) throws IOException {
+	public ResponseEntity<CompanyRiskScore> saveRiskScore(@RequestBody CompanyRiskScore companyRiskScore) throws IOException {
+		
+		logger.info("Request received for adding company risk score");
 		
 		if(!companyRiskScoreService.checkDataIfPresent(companyRiskScore)) {
 			logger.info("Company name already present");
 		}
 		
-		System.out.println(companyRiskScore);
 		 companyRiskScoreService.saveRiskScore(companyRiskScore);
-		 return companyRiskScore;
+		 
+		 logger.info("Request completed for adding company risk score");
+		 
+		 return ResponseEntity.ok(companyRiskScore);
 	}
 	
 	
@@ -77,8 +86,27 @@ public class CompanyRiskScoreController {
 	 */
 	@GetMapping("/risk-score/{companyName}")
 	public ResponseEntity<CompanyRiskScore> getCompanyRiskScoreByCompanyName(@PathVariable String companyName){
-		CompanyRiskScore companyRiskScore = companyRiskScoreService.getCompanyRiskScoreByCompanyName(companyName);
+		
+		logger.info("Request received for getting single company risk score");
+		
+		CompanyRiskScore companyRiskScore;
+		
+		try {
+			
+			companyRiskScore = companyRiskScoreService.getCompanyRiskScoreByCompanyName(companyName);
+		
+		
+		logger.info("Request completed for getting single company risk score");
+		
 		return ResponseEntity.ok(companyRiskScore);
+		
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+			
+		}
+		
 	}
 	
 	/**
@@ -89,12 +117,28 @@ public class CompanyRiskScoreController {
 	 */
 	@PutMapping("/risk-score/{companyName}")
 	public ResponseEntity<CompanyRiskScore> updateCompanyRiskScore(@PathVariable String companyName, @RequestBody CompanyRiskScore riskScoreDetails){
-		CompanyRiskScore riskScore = companyRiskScoreService.getCompanyRiskScoreByCompanyName(riskScoreDetails.getCompanyName());
+		
+		logger.info("Request received for updating company risk score data");
+		
+		CompanyRiskScore riskScore;
+		
+		try {
+			
+			riskScore = companyRiskScoreService.getCompanyRiskScoreByCompanyName(riskScoreDetails.getCompanyName());
+		
 		riskScore.setCompanyName(riskScoreDetails.getCompanyName());
 		riskScore.setDimensions(riskScoreDetails.getDimensions());
 	
 		CompanyRiskScore updatedRiskScore = companyRiskScoreService.updateRiskScore(riskScore);
+		
+		logger.info("Request completed for updating company risk score data");
+		
 		return ResponseEntity.ok(updatedRiskScore);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.ok(null);
+		}
 	}
 
 	/**
@@ -104,12 +148,32 @@ public class CompanyRiskScoreController {
 	 */
 	@DeleteMapping("/risk-score/{companyName}")
 	public ResponseEntity<Map<String, Boolean>> deleteRiskScore(@PathVariable String companyName){
-		CompanyRiskScore companyRiskScore = companyRiskScoreService.getCompanyRiskScoreByCompanyName(companyName);
-		companyRiskScoreService.deleteCompanyRiskScore(companyRiskScore);
-		Map<String,Boolean> response = new HashMap<>();
-		response.put("Deleted",Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		
+		logger.info("Request received for deleting company risk score");
+		
+		CompanyRiskScore companyRiskScore;
+		try {
+			companyRiskScore = companyRiskScoreService.getCompanyRiskScoreByCompanyName(companyName);
+		
+			companyRiskScoreService.deleteCompanyRiskScore(companyRiskScore);
+			
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Deleted",Boolean.TRUE);
+			
+			logger.info("Request completed for deleting company risk score");
+			
+			return ResponseEntity.ok(response);
+		
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+			Map<String,Boolean> response = new HashMap<>();
+			response.put("Unable to Delete",Boolean.FALSE);
+			return ResponseEntity.ok(response);
+			
+		}
+		
 	}
-	
 	
 }

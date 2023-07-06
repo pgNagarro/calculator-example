@@ -1,5 +1,6 @@
 package com.nagarro.calculator.services.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,63 +25,57 @@ public class RiskCalcServiceImpl implements RiskCalcService{
 	@Autowired
 	private RiskCalcRepository riskCalcRepository;
 	
-	@Override
-	public void addRiskCalc(RiskCalc riskCalc) {
-		logger.info("start : addRiskCalc");
-		riskCalcRepository.save(riskCalc);
-	}
 
+	/**
+	 * Method to get all risk calculation logic data
+	 */
 	@Override
 	public List<RiskCalc> getAllRiskCalcLogic() {
+		
 		logger.info("start : getAllRiskCalcLogic");
 		return riskCalcRepository.findAll();
+		
 	}
 
+	/**
+	 * Method to save risk calculation logic data
+	 */
 	@Override
 	public RiskCalc saveRiskCalc(RiskCalc riskCalc) {
+		
+		logger.info("start : saveRiskCalcLogic");
 		return riskCalcRepository.save(riskCalc);
+		
 	}
 	
-	@Override
-	public RiskCalc getRiskCalcLogicById(RiskCalc riskCalc) {
-		List<RiskCalc> riskCalcs = riskCalcRepository.findByElementName(riskCalc.getElementName());
-		return riskCalcs.get(0);
-	}
+
 	
+	/**
+	 * Method to get risk calculation logic by name
+	 * @throws IOException 
+	 */
 	@Override
-	public RiskCalc getRiskCalcLogicByName(String name) {
+	public RiskCalc getRiskCalcLogicByName(String name) throws IOException {
+		
+		logger.info("start : getRiskCalcLogicByName");
 		List<RiskCalc> riskCalcs = riskCalcRepository.findByElementName(name);
+		
+		if(riskCalcs.isEmpty()) {
+			throw new IOException("Risk calculation logic data not found");
+		}
 		return riskCalcs.get(0);
+		
 	}
 	
+	/**
+	 * Method to delete risk calculation logic data from repo
+	 */
 	@Override
 	public void deleteRiskCalc(RiskCalc riskCalc) {
+		
+		logger.info("start : deleteRiskCalcLogic");
 		riskCalcRepository.deleteById(riskCalc.getElementName());
+		
 	}
-	
-/*
-	@Override
-	public List<RiskCalc> getAllRiskCalcLogic() {
-		return riskCalcRepository.findAll();
-	}
-
-	
-
-	
-
-	@Override
-	public RiskCalc updateRiskCalcLogic(RiskCalc riskCalc) {
-		return riskCalcRepository.save(riskCalc);
-	}
-
-	
-
-	@Override
-	public boolean checkDataIfPresent(RiskCalc riskCalc) {
-		List<RiskCalc> riskCalcs = riskCalcRepository.findByElementName(riskCalc.getElementName());
-		return riskCalcs.isEmpty();
-	}
-	*/
-
-	
+		
 }
