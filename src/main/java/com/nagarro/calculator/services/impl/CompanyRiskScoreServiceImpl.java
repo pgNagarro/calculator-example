@@ -13,8 +13,10 @@ import com.nagarro.calculator.models.CompanyRiskScore;
 import com.nagarro.calculator.models.Dimensions;
 import com.nagarro.calculator.models.RiskDimension;
 import com.nagarro.calculator.repositories.CompanyRiskScoreRepository;
+import com.nagarro.calculator.repositories.ResultRepository;
 import com.nagarro.calculator.repositories.RiskDimensionRepository;
 import com.nagarro.calculator.services.CompanyRiskScoreService;
+
 
 /**
  * Service Implementation Class for Company Risk Score Service
@@ -31,6 +33,9 @@ public class CompanyRiskScoreServiceImpl implements CompanyRiskScoreService{
 	
 	@Autowired 
 	private RiskDimensionRepository riskDimensionRepository;
+	
+	@Autowired
+	private ResultRepository resultRepository;
 
 	/**
 	 *  Method for getting all company risk score data
@@ -90,10 +95,14 @@ public class CompanyRiskScoreServiceImpl implements CompanyRiskScoreService{
 					int dvalue = companyRiskScore.getDimensions().get(0).getDimensionValue();
 				
 					if(flag==-1) {
-						Dimensions dimension =new Dimensions(dname,dvalue);
 						
+						Dimensions dimension =new Dimensions(dname,dvalue);
 						riskScore.getDimensions().add(dimension);
+						
 						companyRiskScoreRepository.save(riskScore);
+						
+						addDimensiontoRestCompanies(riskScore.getCompanyName(), dimension);
+						
 						break;
 						
 					}
@@ -221,6 +230,25 @@ public class CompanyRiskScoreServiceImpl implements CompanyRiskScoreService{
 		
 		companyRiskScoreRepository.deleteById(companyRiskScore.getId());
 		
+		resultRepository.deleteById(companyRiskScore.getCompanyName());
+		
+	}
+	
+	void addDimensiontoRestCompanies(String companyName,Dimensions dimension) {
+		
+		List<CompanyRiskScore> riskScoreList = companyRiskScoreRepository.findAll();
+		
+		for( CompanyRiskScore riskScore : riskScoreList ) {
+			
+			if(!(riskScore.getCompanyName().equals(companyName))) {
+				
+				Dimensions newdimension =new Dimensions(dimension.getDimensionName(),0);
+				riskScore.getDimensions().add(newdimension);
+				companyRiskScoreRepository.save(riskScore);
+				
+			}
+			
+		}
 	}
 	
 }

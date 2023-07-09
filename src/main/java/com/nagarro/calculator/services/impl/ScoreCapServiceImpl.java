@@ -12,12 +12,15 @@ import com.nagarro.calculator.models.ScoreCap;
 import com.nagarro.calculator.repositories.ScoreCapRepository;
 import com.nagarro.calculator.services.ScoreCapService;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Service Implementation Class for Score Cap Service
  * @author parasgautam
  *
  */
 @Service
+@AllArgsConstructor
 public class ScoreCapServiceImpl implements ScoreCapService{
 
 	private static final Logger logger = LoggerFactory.getLogger(ScoreCapServiceImpl.class);
@@ -36,16 +39,6 @@ public class ScoreCapServiceImpl implements ScoreCapService{
 		return scoreCapRepository.findAll();
 	}
 
-	/**
-	 * Method to find score cap data by condition
-	 */
-	@Override
-	public ScoreCap findScoreCap(String condition) {
-		
-		logger.info("start : findScoreCap");
-		return scoreCapRepository.findByCondition(condition);
-		
-	}
 	
 	/**
 	 * Method to save score cap data
@@ -67,6 +60,7 @@ public class ScoreCapServiceImpl implements ScoreCapService{
 	public ScoreCap getScoreCapByCondition(String condition) throws IOException {
 		
 		logger.info("start : getScoreCapByCondition");
+		
 		ScoreCap scoreCaps = scoreCapRepository.findByCondition(condition);
 		
 		if(scoreCaps==null) {

@@ -26,16 +26,6 @@ public class RiskScoreLevelServiceImpl implements RiskScoreLevelService{
 	@Autowired
 	private RiskScoreLevelRepository riskScoreLevelRepository;
 	
-	/**
-	 * Method to add risk score level 
-	 */
-	@Override
-	public void addRiskScoreLevel(RiskScoreLevel riskScoreLevel) {
-		
-		logger.info("start : addRiskScoreLevel");
-		riskScoreLevelRepository.save(riskScoreLevel);	
-		
-	}
 
 	/**
 	 * Method to get risk score level data 
@@ -68,13 +58,13 @@ public class RiskScoreLevelServiceImpl implements RiskScoreLevelService{
 		
 		logger.info("start : getRiskScoreLevelByScore");
 		
-		List<RiskScoreLevel> riskScoreLevels = riskScoreLevelRepository.findByScore(score);
+		RiskScoreLevel riskScoreLevels = riskScoreLevelRepository.findByScore(score);
 		
-		if(riskScoreLevels.isEmpty()) {
+		if(riskScoreLevels==null) {
 			throw new IOException("Risk Score Level not found");
 		}
 		
-		return riskScoreLevels.get(0);
+		return riskScoreLevels;
 		
 	}
 	

@@ -13,10 +13,8 @@ import com.nagarro.calculator.models.RiskDimension;
 public interface RiskDimensionService {
 	
 	List<RiskDimension> getAllRiskDimension();
-
-	void addRiskDimension(RiskDimension riskDimension);
 	
-	RiskDimension saveRiskDimension(RiskDimension riskDimension);
+	RiskDimension saveRiskDimension(RiskDimension riskDimension) throws IOException;
 	
 	RiskDimension getRiskDimensionById(String dimension) throws IOException;
 

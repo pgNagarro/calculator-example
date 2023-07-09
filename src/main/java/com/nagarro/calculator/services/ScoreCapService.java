@@ -14,9 +14,7 @@ import com.nagarro.calculator.models.ScoreCap;
 public interface ScoreCapService {
 	
 	List<ScoreCap> getAllScoreCap();
-	
-	ScoreCap findScoreCap(String condition);
-	
+		
 	ScoreCap saveScoreCap(ScoreCap scoreCap);
 
 	ScoreCap getScoreCapByCondition(String condition) throws IOException;

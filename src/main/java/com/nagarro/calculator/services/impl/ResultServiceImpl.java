@@ -10,6 +10,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
@@ -62,6 +63,8 @@ public class ResultServiceImpl implements ResultService {
 	
 	@Autowired
 	private JobService jobService;
+	
+	public static Job job = new Job();
 
 	/**
 	 * Method to add result to repo
@@ -83,7 +86,7 @@ public class ResultServiceImpl implements ResultService {
 	 * Method to calculate result
 	 */
 	@Override
-//	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 900000)
 	public void calculateResult() {
 		
 		logger.info("start : calculateResult");
@@ -120,19 +123,22 @@ public class ResultServiceImpl implements ResultService {
 				job.setDate(new Date());
 				job.setJobStatus(JobStatus.SUCCESSFULL);
 				job.setDesc("Job executed with no errors");
-				jobService.addJob(job);
-
+				addJobStatus();
 			}
 		} catch (Exception e) {
+			
 			job.setDesc(e.toString());
 			job.setDate(new Date());
 			job.setJobStatus(JobStatus.FAILED);
-			jobService.addJob(job);
+			
+			addJobStatus();
+			
 			e.printStackTrace();
 		}
 
 	}
 	
+
 	/**
 	 * Method for formula evaluation
 	 * @param riskScoreList
@@ -276,12 +282,15 @@ public class ResultServiceImpl implements ResultService {
 				compareScore(level,riskScoreLevelList,values,j);
 			}
 			for (Map.Entry<String, Integer> entry : level.entrySet()) {
+				
 				String s = single_digits[entry.getValue()] + " \"" + entry.getKey() + "\"";
-				ScoreCap scoreCap = scoreCapService.findScoreCap(s);
+				ScoreCap scoreCap = scoreCapService.getScoreCapByCondition(s);
+				
 				if (scoreCap != null) {
 					totalRiskCappedScore = scoreCap.getTotalRiskCappedScore();
 					break;
 				}
+				
 			}
 			map.put(riskScoreList.get(i).getCompanyName(), totalRiskCappedScore);
 		}
@@ -302,7 +311,11 @@ public class ResultServiceImpl implements ResultService {
 			}
 		}
 	}
+	
+	// Method to add job
+	
+	public void addJobStatus() {
+		jobService.addJob(job);
+	}
 
-	
-	
 }

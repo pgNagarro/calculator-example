@@ -58,12 +58,12 @@ public class RiskCalcServiceImpl implements RiskCalcService{
 	public RiskCalc getRiskCalcLogicByName(String name) throws IOException {
 		
 		logger.info("start : getRiskCalcLogicByName");
-		List<RiskCalc> riskCalcs = riskCalcRepository.findByElementName(name);
+		RiskCalc riskCalcs = riskCalcRepository.findByElementName(name);
 		
-		if(riskCalcs.isEmpty()) {
+		if(riskCalcs==null) {
 			throw new IOException("Risk calculation logic data not found");
 		}
-		return riskCalcs.get(0);
+		return riskCalcs;
 		
 	}
 	

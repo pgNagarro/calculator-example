@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,7 @@ public class ResultController {
 	 * @throws IOException
 	 */
 	@GetMapping("/result")
-	public List<Result> displayResult() throws IOException {
+	public ResponseEntity<List<Result>> displayResult() throws IOException {
 		
 		logger.info("Request received for fetching result");
 		
@@ -42,7 +43,9 @@ public class ResultController {
 		
 		logger.info("Request completed for fetching result");
 		
-		return resultService.getResult();
+		List<Result> resultList = resultService.getResult();
+		
+		return ResponseEntity.ok(resultList);
 		
 	}
 	

@@ -17,4 +17,5 @@ public interface ResultService {
 	void addResult(Result result);
 	
 	void calculateResult() throws IOException;
+	
 }

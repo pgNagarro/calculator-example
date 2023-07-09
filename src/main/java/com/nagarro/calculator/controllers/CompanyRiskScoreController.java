@@ -41,7 +41,7 @@ public class CompanyRiskScoreController {
 	
 	/**
 	 * Method to get all data in company risk score table
-	 * @return
+	 * @return List<CompanyRiskScore>
 	 */
 	@GetMapping("/risk-score")
 	public ResponseEntity<List<CompanyRiskScore>> getCompanyRiskScore() {
@@ -59,7 +59,7 @@ public class CompanyRiskScoreController {
 	/**
 	 * Method for adding company risk score data
 	 * @param companyRiskScore
-	 * @return
+	 * @return ResponseEntity<CompanyRiskScore>
 	 * @throws IOException 
 	 */
 	@PostMapping("/addRiskScore")	
@@ -82,7 +82,7 @@ public class CompanyRiskScoreController {
 	/**
 	 * Method for getting single company risk score data
 	 * @param companyName
-	 * @return
+	 * @return ResponseEntity<CompanyRiskScore>
 	 */
 	@GetMapping("/risk-score/{companyName}")
 	public ResponseEntity<CompanyRiskScore> getCompanyRiskScoreByCompanyName(@PathVariable String companyName){
@@ -113,7 +113,7 @@ public class CompanyRiskScoreController {
 	 * Method for updating company risk score data
 	 * @param companyName
 	 * @param riskScoreDetails
-	 * @return
+	 * @return ResponseEntity<CompanyRiskScore>
 	 */
 	@PutMapping("/risk-score/{companyName}")
 	public ResponseEntity<CompanyRiskScore> updateCompanyRiskScore(@PathVariable String companyName, @RequestBody CompanyRiskScore riskScoreDetails){
@@ -144,7 +144,7 @@ public class CompanyRiskScoreController {
 	/**
 	 * Method for deleting company risk score data
 	 * @param companyName
-	 * @return
+	 * @return ResponseEntity<Map<String, Boolean>>
 	 */
 	@DeleteMapping("/risk-score/{companyName}")
 	public ResponseEntity<Map<String, Boolean>> deleteRiskScore(@PathVariable String companyName){

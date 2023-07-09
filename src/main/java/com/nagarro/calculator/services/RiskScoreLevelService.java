@@ -14,8 +14,6 @@ public interface RiskScoreLevelService {
 	
 	List<RiskScoreLevel> getAllRiskScoreLevel();
 
-	void addRiskScoreLevel(RiskScoreLevel riskScoreLevel);
-
 	RiskScoreLevel saveRiskScoreLevel(RiskScoreLevel riskScoreLevel);
 
 	RiskScoreLevel getRiskScoreLevelByScore(String score) throws IOException;
